@@ -81,6 +81,7 @@ class Categorias{
         }
     }
 
+    
     public function eliminarCategoria($id) {
         try {
             $qry = "DELETE FROM {$this->table} WHERE id = :id";
@@ -88,6 +89,20 @@ class Categorias{
             $st->bindParam(':id', $id, PDO::PARAM_INT);
             $st->execute();
             return true;
+        } catch (PDOException $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            return false;
+        }
+    }
+    
+
+    public function listarpid($id) {
+        try {
+            $qry = "SELECT nombre FROM {$this->table} WHERE id = :id";
+            $st = $this->conn->prepare($qry);
+            $st->bindParam(':id', $id, PDO::PARAM_INT); // Asegúrate de vincular correctamente el valor de $id
+            $st->execute();
+            return $st->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             echo 'Excepción capturada: ', $e->getMessage(), "\n";
             return false;
