@@ -43,6 +43,7 @@
             $error = "Error al borrar el registro";
         }
     }
+    //luis
 ?>
     <!--Imprimir el error o el mensaje -->
 
