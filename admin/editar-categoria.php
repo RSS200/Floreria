@@ -33,12 +33,12 @@
             }
         }
     }
-    
-    if (isset($_POST['borrarUsuario'])){
+    //ELIMINA LA CATEGORIA 
+    if (isset($_POST['borrarCategoria'])){
         $id = $_POST['id'];
-        if ($usuario->borrarUsuario($id)){
+        if ($categoria->eliminarCategoria($id)){
             $mensaje = "Se ha borrado el registro";
-            header( "Location: usuarios.php?mensaje=".urlencode($mensaje));
+            header( "Location: listacategoria.php");
         } else {
             $error = "Error al borrar el registro";
         }
@@ -83,7 +83,7 @@
         
             <br/>
             <button type="submit" name="editarCategoria" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Editar Categoria</button>
-            <button type="submit" name="borrarUsuario" class="btn btn-danger float-right"><i class="bi bi-person-bounding-box"></i> Borrar Categoria</button>
+            <button type="submit" name="borrarCategoria" class="btn btn-danger float-right"><i class="bi bi-person-bounding-box"></i> Borrar Categoria</button>
             </form>
         </div>
     </div>

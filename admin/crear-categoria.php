@@ -11,7 +11,23 @@
         $id = $_GET['id'];
         $cat = $categoria->getCategoria($id);
     } 
-    
+    //CREA LA CATEGORIA
+    if(isset($_POST['CrearCategoria'])){
+        $nombre=$_POST["nombre"];
+        $activo=intval($_POST['activo']);
+        if($nombre=='' || empty($nombre) || $activo==3){
+            $error = "Todos los campos son obligatorios";
+        }else{
+            if($categoria->crearCategoria($nombre, $activo)){
+                $mensaje = "Se ha actualizado el registro";
+               session_start();
+               $_SESSION['Mensaje']='Se ha editado la variable con extito';
+               header( "Location: listacategoria.php");
+            }
+        }
+    }else{
+        $error = "Error al borrar el registro";
+    }
    
 ?>
     <!--Imprimir el error o el mensaje -->

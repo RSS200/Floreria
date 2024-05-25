@@ -80,6 +80,19 @@ class Categorias{
             return false;
         }
     }
+
+    public function eliminarCategoria($id) {
+        try {
+            $qry = "DELETE FROM {$this->table} WHERE id = :id";
+            $st = $this->conn->prepare($qry);
+            $st->bindParam(':id', $id, PDO::PARAM_INT);
+            $st->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+            return false;
+        }
+    }
     
     
 }
