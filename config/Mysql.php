@@ -3,7 +3,7 @@
         private $host = "localhost";
         private $db_name = "floreria";
         private $user = "root";
-        private $password = "root";
+        private $password = "";
         private $conn;
 
         //Regresa la conexión de la base de datos

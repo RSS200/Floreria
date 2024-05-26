@@ -7,6 +7,9 @@
     include("../includes/menu.php"); 
     include("../config/Mysql.php");
     include("../modelos/Usuario.php");
+    if (!$_SESSION['auth']){
+        header('Location: ../login.php');
+    }
     $base = new Mysql();
     $cx = $base->connect();
     $usuarios = new Usuario($cx);

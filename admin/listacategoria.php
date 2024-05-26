@@ -1,12 +1,13 @@
 <?php
-/*if (!$_SESSION['auth']){
-        header('Location: ../index.php');
-        die();
-    }*/
+
+  
 include("../includes/header.php");
 include("../includes/menu.php");
 include("../config/Mysql.php");
 include("../modelos/Categorias.php");
+if (!$_SESSION['auth']){
+    header('Location: ../login.php');
+}
 $base = new Mysql();
 $cx = $base->connect();
 $categoria = new Categorias($cx);

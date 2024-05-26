@@ -27,7 +27,13 @@
           <a class="nav-link "  href="<?=$ruta?>admin/listausuarios.php" >Usuarios</a>
         </li>
       </ul>
+
+
+
       
     </div>
   </div>
+  <div>
+    <a href="../cerrar-sesion.php" class="nav-link d-inline-block mx-4" >Salir</a>
+  </div>  
 </nav>

@@ -4,6 +4,9 @@
     include("../config/Mysql.php");
     include("../modelos/Categorias.php");
     include("../modelos/Flores.php");
+    if (!$_SESSION['auth']){
+        header('Location: ../login.php');
+    }
     $base = new Mysql();
     $cx = $base->connect();
     $categoria = new Categorias($cx);
