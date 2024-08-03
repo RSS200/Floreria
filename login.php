@@ -19,7 +19,7 @@
                 $_SESSION['auth'] = true;
                 $_SESSION['id'] = $u->id;
                 $_SESSION['nombre'] = $u->nombre;
-                $_SESSION['rol_id'] = $u->rol_id;
+                $_SESSION['rol_id'] = $u->admin;
                 header('Location:index.php'); 
             } else {
                 $error = "Credenciales inválidas";

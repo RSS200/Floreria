@@ -39,10 +39,10 @@ $categoria = new Categorias($cx);
 </div>
 
 <div class="container text-center m-5">
-    <h3 class="titulos">Lista de Categorias</h3>
+    <h3 class="titulos">Lista de Flores registradas</h3>
 </div>
 
-<div>
+<div class="container">
     <a href="crear-flor.php" class="btn btn-primary">Crear</a>
 </div>
 
@@ -71,18 +71,22 @@ $categoria = new Categorias($cx);
 
                     </td>
 
-                    <td>
+                    <td> 
                         <?php
-                        $categoriaNombre = $categoria->listarpid($flor->id);
-                        if ($categoriaNombre && isset($categoriaNombre->nombre)) {
-                            echo htmlspecialchars($categoriaNombre->nombre, ENT_QUOTES, 'UTF-8');
+                        $categoriaNombre = $categoria->listarpid(intval($flor->id_categoria) );
+                        if (!empty($categoriaNombre)) {
+                            $nombre = $categoriaNombre[0]->nombre;
+                            echo $nombre; 
                         } else {
-                            echo 'Nombre no encontrado';
+                            echo "No se encontraron resultados.";
                         }
                         ?>
                     </td>
                     <td>
-                        <a href="editar-categoria.php?id=<?= $flor->id ?>" class="btn btn-warning">Editar</a>
+                    <?php if ($_SESSION['rol_id'] == 1): ?>
+                        <a href="editar-flor.php?id=<?= $flor->id ?>" class="btn btn-warning">Editar</a>
+                        <a href="eliminar-flor.php?id=<?= $flor->id ?>" class="btn btn-danger">Eliminar</a>
+                    <?php endif;?>
                     </td>
                 </tr>
             <?php endforeach; ?>

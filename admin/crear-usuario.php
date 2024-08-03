@@ -10,34 +10,30 @@
     $cx = $base->connect();
     $usuario = new Usuario($cx);
     $id=0;
-    if (isset($_GET['id'])){
-        $id = $_GET['id'];
-        $user = $usuario->getUser($id);
-    } 
-    if (isset($_POST['editarUsuario'])){
+    
+    if (isset($_POST['crearUsuario'])){
      
         $nombre=$_POST["nombre"];
         $nombreusuario =$_POST['usuario'];
+        $contrasena =$_POST['contrasena'];
         $admin=intval($_POST['admin']);
-        $id = $_POST['id'];
         
         if ($nombre=='' || empty($nombre) || $nombreusuario=='' || empty($nombreusuario) || $admin==0){
             $error = "Todos los campos son obligatorios";
         } else {
             
-            if ($usuario->editarUsuario($id, $nombre,$nombreusuario,$admin)) {
-                $mensaje = "Se ha actualizado el registro";
+            if ($usuario->crearUsuario( $nombre,$nombreusuario,$admin, $contrasena)) {
+                $mensaje = "Se ha insertado el registro";
                // header( "Location: usuarios.php?mensaje=".urlencode($mensaje));
                session_start();
-               $_SESSION['Mensaje']='Se ha editado la variable con extito';
+               $_SESSION['Mensaje']='Se ha insertado la variable con extito';
                header( "Location: listausuarios.php");
             } else {
                 $error = "Existe un problema al actualizar";
             }
         }
     }
-    
-   
+
 ?>
     <!--Imprimir el error o el mensaje -->
 
@@ -53,36 +49,38 @@
 </div>
 
     <div class="titulos text-center container m-5">
-       <h3>Editar Usuario</h3>
+       <h3>Crear Usuario</h3>
     </div>            
 
     <div class="row">
         <div class="col-sm-6 offset-3">
         <form method="POST" action="">
 
-            <input type="hidden" name="id" value="<?=$user->id?>">
 
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingresa el nombre" value="<?=$user->nombre?>" >              
+                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingresa el nombre"  >              
             </div>
             <div class="mb-3">
                 <label for="usuario" class="form-label">usuario:</label>
-                <input type="usuario" class="form-control" name="usuario" id="usuario" placeholder="Ingresa el usuario" value="<?=$user->usuario?>" >               
+                <input type="usuario" class="form-control" name="usuario" id="usuario" placeholder="Ingresa el usuario"  >               
+            </div>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Contraseña:</label>
+                <input type="text" class="form-control" name="contrasena" id="contrasena" placeholder="Ingresa la contraseña"  >              
             </div>
             <div class="mb-3">
             <label for="" class="form-label">Rol:</label>
             <select class="form-select" aria-label="Default select example" name="admin">
-                <option value="1" <?=($user->admin==1?'selected':'')?>>Administrador</option>  
-                <option value="2" <?=($user->admin==2?'selected':'')?>>Usuario</option>
+                <option value="1" >Administrador</option>  
+                <option value="2" >Usuario</option>
                              
             </select>             
             </div>          
         
             <br />
-            <button type="submit" name="editarUsuario" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Editar Usuario</button>
+            <button type="submit" name="crearUsuario" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Crear Usuario</button>
 
-            <button type="submit" name="borrarUsuario" class="btn btn-danger float-right"><i class="bi bi-person-bounding-box"></i> Borrar Usuario</button>
             </form>
         </div>
     </div>

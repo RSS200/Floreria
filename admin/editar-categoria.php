@@ -36,17 +36,7 @@
             }
         }
     }
-    //ELIMINA LA CATEGORIA 
-    if (isset($_POST['borrarCategoria'])){
-        $id = $_POST['id'];
-        if ($categoria->eliminarCategoria($id)){
-            $mensaje = "Se ha borrado el registro";
-            header( "Location: listacategoria.php");
-        } else {
-            $error = "Error al borrar el registro";
-        }
-    }
-    //luis
+  
 ?>
     <!--Imprimir el error o el mensaje -->
 
@@ -87,7 +77,7 @@
         
             <br/>
             <button type="submit" name="editarCategoria" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Editar Categoria</button>
-            <button type="submit" name="borrarCategoria" class="btn btn-danger float-right"><i class="bi bi-person-bounding-box"></i> Borrar Categoria</button>
+            <a href="listacategoria.php" class="btn btn-danger float-right"><i class="bi bi-person-bounding-box"></i> Cancelar</a>
             </form>
         </div>
     </div>

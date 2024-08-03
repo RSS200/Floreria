@@ -69,6 +69,7 @@ class Categorias{
 
     public function crearCategoria($nombre, $activo) {
         try {
+           
             $qry = "INSERT INTO {$this->table} (nombre, activo) VALUES (:nombre, :activo)";
             $st = $this->conn->prepare($qry);
             $st->bindParam(':nombre', $nombre, PDO::PARAM_STR);
@@ -100,9 +101,11 @@ class Categorias{
         try {
             $qry = "SELECT nombre FROM {$this->table} WHERE id = :id";
             $st = $this->conn->prepare($qry);
+           
             $st->bindParam(':id', $id, PDO::PARAM_INT); // Asegúrate de vincular correctamente el valor de $id
             $st->execute();
             return $st->fetchAll(PDO::FETCH_OBJ);
+           
         } catch (PDOException $e) {
             echo 'Excepción capturada: ', $e->getMessage(), "\n";
             return false;

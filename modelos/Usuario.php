@@ -7,17 +7,19 @@
             $this->conn =$cx;
         }
 
-        public function registro ($nombre, $email, $password){
+        public function crearUsuario ($nombre, $nombreUsuario, $admin, $password){
             try {
                 //Instrucción que dice que hacer
-                $qry = "insert into " . $this->table . "(nombre,  email, password, rol_id) values (:nombre, :email, :password, 2)";
+                $qry = "INSERT INTO " . $this->table . "(nombre,  usuario, password, admin, fecha_creacion) VALUES (:nombre, :nombreUsuario, :password, :admin, CURDATE())";
                 //Preparo la operación
                 $st = $this->conn->prepare($qry);
                 //Asignar los valores
                 $pass_encriptada = md5($password);
-                $st->bindParam (':nombre', $nombre, PDO::PARAM_STR);
-                $st->bindParam (":email", $email,PDO::PARAM_STR);
-                $st->bindParam (":password", $pass_encriptada, PDO::PARAM_STR);
+                $st->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+                $st->bindParam(":nombreUsuario", $nombreUsuario, PDO::PARAM_STR);
+                $st->bindParam(":password", $pass_encriptada, PDO::PARAM_STR);
+                $st->bindParam(":admin", $admin, PDO::PARAM_INT);  
+                
                 $st->execute();
                 return true;
             } catch (PDOException $e) {
@@ -25,6 +27,7 @@
                 return false;
             }
         }
+        
 
         
         public function listar(){
@@ -72,15 +75,14 @@
             }
         }
 
-        public function borrarUsuario ($id){
+        public function eliminarUsuario ($id){
             try{
 
                 $qry = "select count(*) from ". $this->table . " ";
                 $st = $this->conn->prepare($qry);
                 $st->execute();
                 $valor =$st->fetch(PDO::FETCH_OBJ);
-                echo $valor;
-                die();
+             
                 $qry = "delete from  ".$this->table." where id=:id";
                 $st = $this->conn->prepare($qry);
                 $st->bindParam(':id',$id,PDO::PARAM_INT);

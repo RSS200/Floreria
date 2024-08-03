@@ -18,15 +18,16 @@
             Floreria
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Arreglos</a></li>
-            <li><a class="dropdown-item" href="#">Flores</a></li>
+            <li><a class="dropdown-item" href="<?=$ruta?>admin/listadoarreglos.php">Arreglos</a></li>
+            <li><a class="dropdown-item" href="<?=$ruta?>admin/listaflores.php">Flores</a></li>
             <li><a class="dropdown-item" href="<?=$ruta?>admin/listacategoria.php">Categoria</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link "  href="<?=$ruta?>admin/listausuarios.php" >Usuarios</a>
-        </li>
-      </ul>
+        <?php if ($_SESSION['rol_id'] == 1): ?>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= $ruta ?>admin/listausuarios.php">Usuarios</a>
+    </li>
+<?php endif; ?>
 
 
 
@@ -34,6 +35,6 @@
     </div>
   </div>
   <div>
-    <a href="../cerrar-sesion.php" class="nav-link d-inline-block mx-4" >Salir</a>
+    <a href="<?=$ruta.'/cerrar-sesion.php'?>" class="nav-link d-inline-block mx-4" >Salir</a>
   </div>  
 </nav>

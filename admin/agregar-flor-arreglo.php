@@ -4,6 +4,7 @@
     include("../config/Mysql.php");
     include("../modelos/Categorias.php");
     include("../modelos/Flores.php");
+    include("../modelos/Arreglo.php");
     if (!$_SESSION['auth']){
         header('Location: ../login.php');
     }
@@ -12,25 +13,33 @@
     $categoria = new Categorias($cx);
     $categorias = $categoria->listar();
     $flores = new Flores($cx);
+    $arreglo = new Arreglo($cx);
     $id=0;
     if (isset($_GET['id'])){
         $id = $_GET['id'];
         $cat = $categoria->getCategoria($id);
     } 
     //CREA LA FLOR
-    if(isset($_POST['CrearFlor'])){
-        $nombre=$_POST["nombre"];
-        $precio =$_POST["precio"];
-        $activo=intval($_POST['activo']);
-        $categoria=intval($_POST['categoria']);
-        if($nombre=='' || empty($nombre) ){
-            $error = "Todos los campos son obligatorios";
+    if(isset($_POST['CrearFlorArreglo'])){
+   
+        $piezas=$_POST["piezas"];
+        $idFlor =$_POST["idFlor"];
+        $idArreglo =$_POST["idArreglo"];
+        $activo=1;
+      
+        if($piezas=='' || empty($piezas) ){
+            echo "Todos los campos son obligatorios";
+            die();
         }else{
-            if($flores->crearFlor($nombre,$precio,$activo,$categoria)){
+            $florSelccionada = $flores->getFlor($idFlor);
+            $precioFlorPieza= $florSelccionada->precio;
+            $precioTotalFlor= $florSelccionada->precio * $piezas;
+         
+            if($arreglo->insertarFlorEnArreglo($piezas,$precioFlorPieza,$precioTotalFlor, $idFlor, $idArreglo)){
                 $mensaje = "Se ha actualizado el registro";
                session_start();
                $_SESSION['Mensaje']='Se ha ingresado la flor con extito';
-               header( "Location: listaflores.php");
+               header( "Location: editar-arreglo.php?idArreglo=".$idArreglo);
             }
         }
     }else{
@@ -60,35 +69,26 @@
         <form method="POST" action="">
 
             <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingresa el nombre" >              
+                <label class="form-label">piezas:</label>
+                <input type="number" class="form-control" name="piezas" id="piezas" placeholder="Ingresa el numero de piezas" required >              
             </div>
+
+            <input type="hidden" name="idArreglo" value="<?=$_GET['idArreglo']?>">
+          
             <div class="mb-3">
-                <label for="precio" class="form-label">Precio:</label>
-                <input type="number" class="form-control" name="precio" id="precio" placeholder="Ingresa el precio de la flor" >              
-            </div>
-            <div class="mb-3">
-            <label for="" class="form-label">Activo:</label>
-            <select class="form-select" aria-label="Default select example" name="activo">
-                <option value="1">Activo</option>  
-                <option value="0">Inactivo</option>
-                             
-            </select>             
-            </div>   
-            <div class="mb-3">
-            <label for="" class="form-label">Categoria:</label>
+            <label for="" class="form-label">Flor:</label>
             
-            <select class="form-select" aria-label="Default select example" name="categoria">
-            <?php foreach($categorias as $cat):?>
-                <option value="<?= $cat->id ?>"><?= $cat->nombre ?></option>
+            <select class="form-select" name="idFlor">
+            <?php foreach($flores->listar() as $flor):?>
+                <option value="<?=$flor->id ?>"><?= $flor->nombre ?></option>
             <?php endforeach; ?>              
             </select>             
 
             </div>       
         
             <br/>
-            <button type="submit" name="CrearFlor" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Crear flor</button>
-            <a href="listaflores.php" class="btn btn-warning">Cancelar</a>
+            <button type="submit" name="CrearFlorArreglo" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Agregar al arreglo</button>
+            <a href="editar-arreglo.php?idArreglo=<?=$_GET['idArreglo']?>" class="btn btn-warning">Cancelar</a>
             </form>
         </div>
     </div>

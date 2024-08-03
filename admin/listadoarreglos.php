@@ -1,17 +1,15 @@
 <?php
 
-
 include("../includes/header.php");
 include("../includes/menu.php");
 include("../config/Mysql.php");
-include("../modelos/Categorias.php");
-if (!$_SESSION['auth']) {
+include("../modelos/Arreglo.php");
+if (!$_SESSION['auth']){
     header('Location: ../login.php');
 }
 $base = new Mysql();
 $cx = $base->connect();
-$categoria = new Categorias($cx);
-
+$arreglos = new Arreglo($cx);
 ?>
 
 <!--Imprimir el error o el mensaje -->
@@ -38,11 +36,11 @@ $categoria = new Categorias($cx);
 </div>
 
 <div class="container text-center m-5">
-    <h3 class="titulos">Lista de Categorias registradas</h3>
+    <h3 class="titulos">Lista de Flores registradas</h3>
 </div>
 
 <div class="container">
-    <a href="crear-categoria.php" class="btn btn-primary">Crear</a>
+    <a href="crear-arreglo.php" class="btn btn-primary">Crear</a>
 </div>
 
 <div class="container">
@@ -51,26 +49,35 @@ $categoria = new Categorias($cx);
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Activo</th>
+                <th>Descripcion</th>
+                <th>Precio de Flores</th>
+                <th>Precio de mano de obra</th>
+                <th>Total</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($categoria->listar() as $categori) : ?>
+            <?php foreach ($arreglos->listar() as $arreglo) : ?>
                 <tr>
-                    <td><?= $categori->id ?></td>
-                    <td><?= $categori->nombre ?></td>
+                    <td><?= $arreglo->id ?></td>
+                    <td><?= $arreglo->nombre ?></td>
+                    <td><?= $arreglo->descripcion ?></td>
+                    <td>$ <?= $arreglos->sumaCostoFloresArreglo($arreglo->id) ?></td>
+                    <td>$ <?= $arreglo->precioManoObra ?></td>
+                    <td>$ <?= $arreglo->precioManoObra + $arreglo->precioFlores?></td>
                     <td>
                         <span class="badge bg-primary">
-                            <?php print $categori->activo ? 'activo' : 'inactivo'; ?>
+                            <?php print $arreglo->activo ? 'activo' : 'inactivo'; ?>
                         </span>
 
                     </td>
+
+                
                     <td>
-                        <?php if ($_SESSION['rol_id'] == 1) : ?>
-                            <a href="editar-categoria.php?id=<?= $categori->id ?>" class="btn btn-warning">Editar</a>
-                            <a href="eliminar-categoria.php?id=<?= $categori->id ?>" class="btn btn-danger">Eliminar</a>
-                        <?php endif; ?>
+                    <?php if ($_SESSION['rol_id'] == 1): ?>
+                        <a href="editar-arreglo.php?idArreglo=<?= $arreglo->id ?>" class="btn btn-warning">Ver</a>
+                    <?php endif;?>
                     </td>
                 </tr>
             <?php endforeach; ?>

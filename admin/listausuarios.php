@@ -44,7 +44,9 @@
   <h3 class="titulos">Lista de Usuarios</h3>
 </div>
 
-
+<div class="container"> 
+    <a href="crear-usuario.php" class="btn btn-primary">Crear</a>
+</div>
 
 <div class="container">
 <table class="table">
@@ -67,7 +69,8 @@
             <td><?=$usuario->admin?></td>
             <td><?=$usuario->fecha_creacion?></td>
             <td>
-                <a href="editar-usuario.php?id=<?=$usuario->id?>" class="btn btn-warning">Editar</a>                                            
+                <a href="editar-usuario.php?id=<?=$usuario->id?>" class="btn btn-warning">Editar</a>         
+                <a href="eliminar-usuario.php?id=<?= $usuario->id ?>" class="btn btn-danger">Eliminar</a>                                   
             </td>
         </tr>
     <?php endforeach;?>

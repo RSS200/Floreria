@@ -24,7 +24,7 @@
             if($categoria->crearCategoria($nombre, $activo)){
                 $mensaje = "Se ha actualizado el registro";
                session_start();
-               $_SESSION['Mensaje']='Se ha editado la variable con extito';
+               $_SESSION['Mensaje']='Se ha agregado la categoria con extito';
                header( "Location: listacategoria.php");
             }
         }
@@ -61,7 +61,6 @@
             <div class="mb-3">
             <label for="" class="form-label">Activo:</label>
             <select class="form-select" aria-label="Default select example" name="activo">
-                <option value="3">--Selecciona un rol--</option>
                 <option value="1">Activo</option>  
                 <option value="0">Inactivo</option>
                              
@@ -69,7 +68,7 @@
             </div>          
         
             <br/>
-            <button type="submit" name="CrearCategoria" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Editar Categoria</button>
+            <button type="submit" name="CrearCategoria" class="btn btn-success float-left"><i class="bi bi-person-bounding-box"></i> Crear Categoria</button>
             <a href="listacategoria.php" class="btn btn-warning">Cancelar</a>
             </form>
         </div>
